@@ -1,9 +1,12 @@
 package com.example.duckdemo.data.model;
 
+import com.sun.istack.NotNull;
+
 // Duck is our Business Domain
 public class Duck {
 
 	private int id;
+	
 	private String name;
 	private String colour;
 	private String habitat;
