@@ -2,6 +2,8 @@ package com.example.duckdemo.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +39,7 @@ public class DuckController {
 		this.duckService = duckService;
 	}
 	
+	// localhost:8080/duck
 	@GetMapping
 	public ResponseEntity<List<Duck>> getAllDucks() {
 		
@@ -49,16 +53,36 @@ public class DuckController {
 		return new ResponseEntity<List<Duck>>(data, httpHeaders, HttpStatus.OK);
 	}
 	
-//	@PostMapping
-//	public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
-//		Duck newDuck = duckService.createDuck(duck);
-//		
-//		HttpHeaders httpHeaders = new HttpHeaders();
-//		httpHeaders.add("Location", String.valueOf(newDuck.getId()));
-//				
-//		// ResponseEntity(Body, Headers, HttpStatus)
-//		return new ResponseEntity<Duck>(newDuck, httpHeaders, HttpStatus.CREATED);
-//	}
+	// localhost:8080/duck/3
+	@GetMapping("/{id}")
+	public ResponseEntity<Duck> getDuckById(@PathVariable("id") int id) {
+		Duck duck = duckService.readById(id);
+		
+		return new ResponseEntity<Duck>(duck, HttpStatus.OK);
+	}
+	
+	// localhost:8080/duck/alt?id=1
+	@GetMapping("/alt")
+	public ResponseEntity<Duck> getDuckByIdAlt(@PathParam("id") int id) {
+		Duck duck = duckService.readById(id);
+		
+		return new ResponseEntity<Duck>(duck, HttpStatus.OK);
+	}
+	
+	@PostMapping
+	public ResponseEntity<Duck> createDuck(@RequestBody Duck duck) {
+		Duck newDuck = duckService.createDuck(duck);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", String.valueOf(newDuck.getId()));
+	
+		return new ResponseEntity<Duck>(duck, headers, HttpStatus.CREATED);
+	}
+	
+	// Update duck method
+	
+	
+	// Delete duck method
 	
 	// @GetMapping (retrieving something)
 	// @PostMapping (creating something)

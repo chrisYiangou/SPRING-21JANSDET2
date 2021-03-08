@@ -28,4 +28,9 @@ public class DuckService {
 		ducks.add(duck);
 		return duck;
 	}
+	
+	// Update duck
+	
+	
+	// Delete duck
 }
