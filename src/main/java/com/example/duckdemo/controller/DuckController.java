@@ -80,7 +80,11 @@ public class DuckController {
 	}
 	
 	// Update duck method
-	
+	public ResponseEntity<Duck> updateDuck(@RequestBody Duck duck) {
+		Duck updateduck = duckService.updateDuck(updateDuck);
+		
+		HttpHeaders headers = 
+	}
 	
 	// Delete duck method
 	
